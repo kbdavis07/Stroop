@@ -1,0 +1,226 @@
+﻿@model IEnumerable<Stroop.Models.TestResult>
+
+@{
+    ViewBag.Title = "Stroop Color Game";
+}
+
+
+
+
+    <div class="row-fluid" style="width:90%; margin-left:10%;margin-top:20px">
+        <div class="span8">
+            <legend>Stroop Color Game | Countdown:<span ng-class='UI.countDownClass' ng-bind="game.countDown || '?'"></span></legend>
+            <div class="alert alert-block">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Stroop Effect is a famous psychology game for testing reaction. Choose the color of the text by either clicking the button below or keypress.
+                http://en.wikipedia.org/wiki/Stroop_effect
+            </div>
+
+
+            <h3><span ng-bind="game.Base|| 'Start' ">   </span> Round </h3>
+
+
+            <div class="panel panel-info" id="summary" ng-show="game.isStarted" ng-cloak>
+                <div class="panel-heading">
+                    <h3 class="panel-title">Current Score</h3>
+
+
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+
+                      
+
+                            <div class="col-sm-1">
+                                <span class="label label-success">Total Right: </span> <span class="badge col-sm-offset-1">  {{game.rightCount}} </span>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <span class="label label-danger" style="background-color:red;">Total Wrong: </span>  <span class="badge">  {{game.wrongCount}} 	</span>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <span class="label label-info">Total Answered: </span>  <span class="badge"> {{game.rightCount+game.wrongCount}} </span>
+                            </div>
+
+                       
+
+                  </div>
+                        
+
+
+
+                    </div>
+            </div>
+
+
+            <div class="row-fluid">
+                <div class="box">
+                    <div ng-class="game.quizClass">
+                        <span ng-bind="game.quizText || 'Color'"></span>
+                    </div>
+                </div>
+                <div class="box2">
+                    <img ng-src={{UI.imgSrc}} style="width:100px; height:100px; margin-left:15%; margin-top:15%" ng-cloak></img>
+                </div>
+            </div>
+            <div ng-show='UI.showStartButton' style="margin-top:20px; margin-bottom:20px;">
+                <a class="btn btn-large btn-primary" ng-click="startGame()">Start Play!</a>
+            </div>
+
+            <div ng-show='UI.showGameButton' style="margin-top:20px; margin-bottom:20px;" ng-cloak>
+                <a class="btn btn-large btn-danger" ng-click="clicked('green')">Green(G)</a>
+                <a class="btn btn-large btn-info" ng-click="clicked('red')">Red(R)</a>
+                <a class="btn btn-large btn-success" ng-click="clicked('orange')">Orange(O)</a>
+                <a class="btn btn-large btn-warning" ng-click="clicked('blue')">Blue(B)</a>
+            </div>
+
+           
+        </div>
+        <div class="span3">
+            <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                            Rules
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            The rule for this game is to Name the <b>COLOR</b> of the <b>TEXT</b> instead of the Name of the Color written in text. <br />
+
+                            <br />
+                            You have <strong><span ng-bind="totalTime || '?'"></span>  </strong> seconds to answer the questions.
+
+                            <br /><br />
+                            <p>You may either click on the buttons indicating the color or use keyboard: </p>
+
+                            <div class="alert alert-info">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                Hint: You may cheat by using the keyboard to answer.  But, don't use it if you consider yourself as an Ninja!
+                            </div>
+
+                            <div class="row">
+                                <div class="col col-md-1">
+                                    <ul class="list-group" style="list-style-type: none;">
+                                        <li class="list-group-item"> <span class="label label-info"> Press "B" for Blue </span> </li>
+                                        <li class="list-group-item"> <span class="label label-success">Press "G" for Green </span> </li>
+                                        <li class="list-group-item"> <span class="label label-danger" style="background-color:red;">Press "R" for Red </span> </li>
+                                        <li class="list-group-item"> <span class="label label-warning">Press "O" for Orange </span> </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <br />
+                            <p> Wrong answer will substract the score, while correct answer incrementing score.</p>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+
+                            <h3> Top Scores </h3>
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            
+
+                            <table class="table">
+                                <tr>
+
+                                    <th>
+                                       Round
+                                    </th>
+
+                                    <th>
+                                        Score
+                                    </th>
+                                    <th></th>
+                                </tr>
+
+
+                                
+
+                                @foreach (var item in Model.OrderBy(item => item.RoundType))
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.RoundType)
+                                        </td>
+
+                                        <td>
+                                            <a href="/Data/Details/@item.ReportId">@Html.DisplayFor(modelItem => item.TotalScore)</a>
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </table>
+
+
+                            @*<ul>
+                                                                @foreach (var group in Model.GroupBy(item => item.RoundType))
+
+                                {
+
+                                                                    <li style="list-style:none";>
+                                                                        @Html.Encode(group.Key)
+                                                                        <ul>
+
+                                                                            @foreach (var item in group)
+                                        {
+                                                                                <li style="list-style:none;">@Html.Encode(item.TotalScore) </li>
+                                        }
+
+                                                                        </ul>
+                                                                    </li>
+
+                                } 
+                            </ul>*@
+
+
+
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div ui-modal class="fade" ng-model="modalShown" id="myModal">
+        <div class="modal-header">
+            <h4>Result</h4>
+            <a ng-click="modalShown=false">Close</a>
+        </div>
+        <div class="modal-body well">
+            <p>
+                In {{totalTime}} seconds, you answered total {{game.rightCount+game.wrongCount}} questions;</br>
+                Of them {{game.rightCount}} is correct.  Of them {{game.wrongCount}} is wrong. </br>
+                Remember, your score get subtracted when you have a wrong answer.
+                Your total score is:{{game.totalScore}}.</br>
+                Please Leave your name:</br>
+                <input type="text" placeholder="Your Name" ng-model="game.userName"></input>
+            </p>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-info cancel" ng-click="modalShown=false" id="SaveData">Save</button>
+            <!--save to database to be continued-->
+            <button class="btn btn-warning cancel" ng-click="modalShown=false">Cancel</button>
+        </div>
+    </div>
+
+    <hr />
+   
+

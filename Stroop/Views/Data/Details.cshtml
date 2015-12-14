@@ -1,0 +1,66 @@
+﻿@model Stroop.Models.TestResult
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TestResult</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoundType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoundType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RightCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RightCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WrongCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WrongCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalScore)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReportId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

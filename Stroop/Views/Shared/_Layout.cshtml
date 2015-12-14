@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="StroopGame">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+   
+    <link rel="stylesheet" href="~/Content/css/app.css" />
+    <link rel="stylesheet" href="~/Content/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/css/bootstrap-responsive.css" />
+    <link rel="shortcut icon" href="~/Content/img/favicon2.ico">
+
+
+</head>
+
+<body ng-controller="StroopGameCtrl" ui-keydown="{71 : 'typed(\'green\')',82 : 'typed(\'red\')','66' : 'typed(\'blue\')','79' : 'typed(\'orange\')' }">
+
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <span class="pull-right" style="margin-right:5%">
+                <p>&copy; @DateTime.Now.Year Stroop Game</p>
+
+            </span>
+
+        </footer>
+    </div>
+
+    @Html.Raw(JSNLog.JavascriptLogging.Configure())
+
+    @*<script src="~/Scripts/lib/jquery-1.7.2.min.js"></script>*@
+    <script src="~/Scripts/app/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/app/jsnlog.js"></script>
+    <script src="~/Scripts/app/modernizr.custom.13209.js"></script>
+    <script src="~/Scripts/app/storage.js"></script>
+    <script src="~/Scripts/lib/angular/angular.js"></script>
+    <script src="~/Scripts/lib/angular-ui.js"></script>
+    <script src="~/Scripts/lib/bootstrap.js"></script>
+    <script src="~/Scripts/app/app.js"></script>
+    <script src="~/Scripts/app/services.js"></script>
+    <script src="~/Scripts/app/controllers.js"></script>
+    <script src="~/Scripts/app/directives.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
